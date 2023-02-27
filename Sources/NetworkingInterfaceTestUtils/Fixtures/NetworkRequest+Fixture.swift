@@ -1,3 +1,4 @@
+import Foundation
 import NetworkingInterface
 
 public struct NetworkRequestFixture: NetworkRequest {
@@ -5,8 +6,9 @@ public struct NetworkRequestFixture: NetworkRequest {
     public let baseUrl: String
     public let path: String
     public let method: NetworkRequestMethod
+    public let body: Encodable?
     public var header: [String: String]
-    public let body: [String: Any]?
+    public var queryParameters: [String : Any]?
     
     public init(
         scheme: String = "https",
@@ -14,7 +16,8 @@ public struct NetworkRequestFixture: NetworkRequest {
         path: String = "path",
         method: NetworkRequestMethod = .post,
         header: [String : String] = [:],
-        body: [String : String]? = nil
+        body: Encodable? = nil,
+        queryParameters: [String : Any]? = nil
     ) {
         self.scheme = scheme
         self.baseUrl = baseUrl
@@ -22,5 +25,6 @@ public struct NetworkRequestFixture: NetworkRequest {
         self.method = method
         self.header = header
         self.body = body
+        self.queryParameters = queryParameters
     }
 }

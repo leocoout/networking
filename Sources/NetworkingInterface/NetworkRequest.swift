@@ -1,10 +1,13 @@
+import Foundation
+
 public protocol NetworkRequest {
     var scheme: String { get }
     var baseUrl: String { get }
     var path: String { get }
     var method: NetworkRequestMethod { get }
     var header: [String: String] { get }
-    var body: [String: Any]? { get }
+    var body: Encodable? { get }
+    var queryParameters: [String: Any]? { get }
 }
 
 public extension NetworkRequest {

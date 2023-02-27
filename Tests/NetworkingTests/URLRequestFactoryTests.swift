@@ -38,16 +38,34 @@ final class URLRequestFactoryTests: XCTestCase {
         XCTAssertEqual(expectedURLRequest?.description, "https://teste.com/path?")
     }
     
-    func test_make_withValidURL_ifContainsBody_shouldReturnCorrectURLRequest() {
+    func test_make_withValidURL_ifContainsQueryParameter_shouldReturnCorrectURLRequest() {
         let networkRequest = NetworkRequestFixture(
             baseUrl: "teste.com",
             path: "/path",
             method: .get,
-            body: ["body_key": "value"]
+            queryParameters: ["query_key": "value"]
         )
         
         let expectedURLRequest = sut.make(from: networkRequest)
     
-        XCTAssertEqual(expectedURLRequest?.description, "https://teste.com/path?body_key=value")
+        XCTAssertEqual(expectedURLRequest?.description, "https://teste.com/path?query_key=value")
     }
+
+    func test_make_withValidURL_ifContainsBody_shouldReturnCorrectURLHttpBody() {
+        let networkRequest = NetworkRequestFixture(
+            baseUrl: "teste.com",
+            path: "/path",
+            method: .get,
+            body: DummyBodyObject()
+        )
+
+        let expectedURLRequest = sut.make(from: networkRequest)
+
+        XCTAssertEqual(expectedURLRequest?.description, "https://teste.com/path?")
+        XCTAssertNotNil(expectedURLRequest?.httpBody)
+    }
+}
+
+private final class DummyBodyObject: Encodable {
+    var dummy: String = "dummy_body"
 }
