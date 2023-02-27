@@ -44,4 +44,11 @@ func get(movieId: String) async throws -> MovieDetailsResponse {
         return try await networking.request(request, responseModel: MovieDetailsResponse.self)
     }
 ```
+
+## TestUtils
+
+This package offers the `NetworkingInterfaceTestUtils` that should be added to your test targets. Basically, this target contains some doubles and fixtures to help you in your unit tests. 
+
+For example, if you inject the `NetworkingProtocol` into a production Service class, you can also inject the `NetworkingProtocolSpy` into the ServiceTests class to mock different response scenarios
+
 Made by me.
